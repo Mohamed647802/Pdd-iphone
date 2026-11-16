@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0B0E1A">
+<title>تثبيت PDF Fusion على الآيفون</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="bg"></div>
+<div class="body" style="padding-top:20px">
+  <header class="brand">
+    <div class="logo">PDF</div>
+    <div><h1>PDF Fusion</h1><p>تثبيت التطبيق على الآيفون</p></div>
+  </header>
+
+  <div class="panel">
+    <b>الخطوة 1 — تنزيل الملف الشخصي</b>
+    <p class="note">افتح الصفحة دي من <b>Safari</b> (مش من كروم ولا من داخل تطبيق تاني).</p>
+    <p id="env" class="note err hidden"></p>
+    <button id="go" class="btn primary" type="button">⬇️  تثبيت أيقونة التطبيق</button>
+    <a id="alt" class="btn ghost" href="#">طريقة بديلة (لو الزر الأول ما فتحش رسالة تنزيل)</a>
+    <p class="note">الرابط اللي هتفتحه الأيقونة: <code id="url"></code></p>
+  </div>
+
+  <div class="panel">
+    <b>باقي الخطوات</b>
+    <ol class="steps">
+      <li>لما تظهر رسالة «هذا الموقع يحاول تنزيل ملف تعريف» اختار <b>السماح (Allow)</b> ثم <b>إغلاق</b>.</li>
+      <li>افتح <b>الإعدادات</b>: هتلاقي في الأعلى <b>«تم تنزيل ملف التعريف»</b> ← اضغط عليه ← <b>تثبيت (Install)</b> ← اكتب رمز القفل ← <b>تثبيت</b> مرتين ← <b>تم</b>.<br>
+        لو مش ظاهر: الإعدادات ← عام ← <b>VPN وإدارة الأجهزة</b> ← الملف المُنزَّل. وكمّل التثبيت خلال 8 دقائق وإلا بيتمسح.</li>
+      <li>هتلاقي أيقونة <b>PDF Fusion</b> على الشاشة الرئيسية ← افتحها. أول فتح محتاج إنترنت (تحميل المكتبات مرة واحدة) وبعدها بيشتغل أوفلاين.</li>
+      <li>للحذف: الإعدادات ← عام ← VPN وإدارة الأجهزة ← PDF Fusion ← <b>إزالة ملف التعريف</b>.</li>
+    </ol>
+  </div>
+
+  <div class="panel">
+    <b>معلومات</b>
+    <p class="note">الملف الشخصي بيعمل حاجة واحدة بس: يضيف أيقونة بتفتح التطبيق بملء الشاشة، ومش بياخد أي صلاحيات على الجهاز.</p>
+    <p class="note">ممكن تلاقي كلمة «غير موقّع» باللون الأحمر — ده طبيعي لأن الملف مش موقّع بشهادة مطوّر.</p>
+    <p class="note">كل المعالجة على جهازك ولا يتم رفع أي ملف.</p>
+  </div>
+</div>
+
+<script>
+(function () {
+  var APP_URL = new URL('./', location.href).href;
+  var ID_CONTENT = '37BF4AAD-985E-455D-B1C8-EC952C54EDAC', ID_PROFILE = 'D9B5E421-F698-4278-84A0-A9E0FF7BFC98';
+
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+  function makeIcon() {
+    var S = 180, k = 2.1, c = document.createElement('canvas');
+    c.width = c.height = S;
+    var g = c.getContext('2d');
+    var bg = g.createLinearGradient(0, 0, 0, S);
+    bg.addColorStop(0, '#1D234A'); bg.addColorStop(1, '#0A0D1A');
+    g.fillStyle = bg; g.fillRect(0, 0, S, S);
+    var gl = g.createRadialGradient(S * 0.95, S * 0.05, 0, S * 0.95, S * 0.05, S * 0.9);
+    gl.addColorStop(0, 'rgba(124,92,255,.55)'); gl.addColorStop(1, 'rgba(124,92,255,0)');
+    g.fillStyle = gl; g.fillRect(0, 0, S, S);
+    function P(p) { return [S / 2 + (p[0] - 55) * k, S / 2 + (p[1] - 54) * k]; }
+    function path(pts) { g.beginPath(); pts.forEach(function (p, i) { var q = P(p); if (i) g.lineTo(q[0], q[1]); else g.moveTo(q[0], q[1]); }); }
+    function poly(pts, fill) { path(pts); g.closePath(); g.fillStyle = fill; g.fill(); }
+    g.save(); g.shadowColor = 'rgba(0,0,0,.5)'; g.shadowBlur = 14; g.shadowOffsetY = 4;
+    poly([[44, 36], [68, 36], [76, 44], [76, 80], [44, 80]], '#fff'); g.restore();
+    poly([[34, 28], [60, 28], [66, 34], [66, 72], [34, 72]], '#5B6BFF');
+    poly([[44, 36], [68, 36], [76, 44], [76, 80], [44, 80]], '#fff');
+    poly([[68, 36], [68, 44], [76, 44]], '#C9CEEA');
+    poly([[44, 58], [76, 58], [76, 72], [44, 72]], '#FF3D5A');
+    g.lineCap = 'round'; g.lineWidth = 2 * k; g.strokeStyle = '#BFC5E6';
+    path([[50, 46], [68, 46]]); g.stroke();
+    path([[50, 52], [63, 52]]); g.stroke();
+    g.fillStyle = '#fff'; g.font = 'bold ' + (10.5 * k) + 'px -apple-system, Helvetica, Arial, sans-serif';
+    g.textAlign = 'center'; g.textBaseline = 'middle';
+    var t = P([60, 65.3]); g.fillText('PDF', t[0], t[1]);
+    return c.toDataURL('image/png').split(',')[1];
+  }
+
+  function profile() {
+    return '<?xml version="1.0" encoding="UTF-8"?>\n' +
+      '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n' +
+      '<plist version="1.0">\n<dict>\n' +
+      '<key>PayloadContent</key>\n<array>\n<dict>\n' +
+      '<key>FullScreen</key><true/>\n' +
+      '<key>IgnoreManifestScope</key><false/>\n' +
+      '<key>Icon</key><data>' + makeIcon() + '</data>\n' +
+      '<key>IsRemovable</key><true/>\n' +
+      '<key>Label</key><string>PDF Fusion</string>\n' +
+      '<key>PayloadDescription</key><string>يضيف أيقونة PDF Fusion إلى الشاشة الرئيسية</string>\n' +
+      '<key>PayloadDisplayName</key><string>PDF Fusion</string>\n' +
+      '<key>PayloadIdentifier</key><string>com.pdffusion.webclip</string>\n' +
+      '<key>PayloadType</key><string>com.apple.webClip.managed</string>\n' +
+      '<key>PayloadUUID</key><string>' + ID_CONTENT + '</string>\n' +
+      '<key>PayloadVersion</key><integer>1</integer>\n' +
+      '<key>Precomposed</key><true/>\n' +
+      '<key>URL</key><string>' + esc(APP_URL) + '</string>\n' +
+      '</dict>\n</array>\n' +
+      '<key>PayloadDescription</key><string>أيقونة تفتح تطبيق PDF Fusion بملء الشاشة</string>\n' +
+      '<key>PayloadDisplayName</key><string>PDF Fusion</string>\n' +
+      '<key>PayloadIdentifier</key><string>com.pdffusion.profile</string>\n' +
+      '<key>PayloadOrganization</key><string>PDF Fusion</string>\n' +
+      '<key>PayloadRemovalDisallowed</key><false/>\n' +
+      '<key>PayloadType</key><string>Configuration</string>\n' +
+      '<key>PayloadUUID</key><string>' + ID_PROFILE + '</string>\n' +
+      '<key>PayloadVersion</key><integer>1</integer>\n' +
+      '</dict>\n</plist>\n';
+  }
+
+  function b64(s) {
+    var bytes = new TextEncoder().encode(s), bin = '';
+    for (var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+    return btoa(bin);
+  }
+
+  document.getElementById('url').textContent = APP_URL;
+  document.getElementById('go').addEventListener('click', function () {
+    var blob = new Blob([profile()], { type: 'application/x-apple-aspen-config' });
+    location.href = URL.createObjectURL(blob);
+  });
+  document.getElementById('alt').addEventListener('click', function (e) {
+    e.preventDefault();
+    location.href = 'data:application/x-apple-aspen-config;charset=utf-8;base64,' + b64(profile());
+  });
+
+  var ua = navigator.userAgent || '';
+  var ios = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var other = /CriOS|FxiOS|EdgiOS|OPiOS|DuckDuckGo|FBAN|FBAV|Instagram|Line\/|Telegram|WhatsApp/.test(ua);
+  var env = document.getElementById('env');
+  if (!ios) env.textContent = '⚠️ الصفحة دي مخصوصة للآيفون. افتحها من Safari على الآيفون.';
+  else if (other) env.textContent = '⚠️ افتح الرابط في Safari — التثبيت لا يعمل من المتصفحات الأخرى.';
+  if (env.textContent) env.classList.remove('hidden');
+})();
+</script>
+</body>
+</html>
